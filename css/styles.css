@@ -503,8 +503,13 @@ input[type="range"] {
 .card-swiper .swiper-slide:first-child,
 .card-swiper.swiper-initialized .swiper-slide { display: block; }
 
+.card-swiper .swiper-slide,
+.detail-swiper .swiper-slide { position: relative; }
+
 .card-swiper img,
 .detail-swiper img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -667,7 +672,7 @@ input[type="range"] {
   padding: 1rem;
 }
 
-.dialog-backdrop { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.72); }
+.dialog-backdrop { position: absolute; inset: 0; z-index: 0; background: rgba(0, 0, 0, 0.72); }
 
 .dialog-panel {
   position: relative;
@@ -705,7 +710,13 @@ input[type="range"] {
 
 .dialog-close { position: absolute; top: 0.7rem; right: 0.7rem; z-index: 3; }
 
-.detail-swiper { position: relative; aspect-ratio: 4 / 3; background: #14120f; }
+.detail-swiper {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  max-height: 72vh;
+  background: #14120f;
+  overflow: hidden;
+}
 
 .detail-swiper .swiper-slide { display: none; height: 100%; }
 .detail-swiper .swiper-slide:first-child,
