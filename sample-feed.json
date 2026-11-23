@@ -1,0 +1,118 @@
+{
+  "ok": true,
+  "updated": "2026-11-23T05:56:00.000Z",
+  "count": 3,
+  "cars": [
+    {
+      "id": "MC-001",
+      "title": "2021 Toyota Camry SE (Sample)",
+      "make": "Toyota",
+      "model": "Camry SE",
+      "year": 2021,
+      "type": "Sedan",
+      "color": "Celestial Silver",
+      "mileage": 38450,
+      "price": 23995,
+      "description": "SAMPLE LISTING - not a real vehicle. One-owner style sedan with 2.5L 4-cylinder, automatic, backup camera, Apple CarPlay/Android Auto, sport cloth seats and adaptive cruise control.",
+      "photoFolder": "https://drive.google.com/drive/folders/1df1mvymdiww-vVE5M3MPsepWvxZr41vx",
+      "status": "Available",
+      "photos": [
+        {
+          "id": "1ic-6fwLyAo0DbBp2tk4O40K3s3XOe1m7",
+          "name": "01-camry.jpg",
+          "url": "https://lh3.googleusercontent.com/d/1ic-6fwLyAo0DbBp2tk4O40K3s3XOe1m7=w1600",
+          "thumb": "https://lh3.googleusercontent.com/d/1ic-6fwLyAo0DbBp2tk4O40K3s3XOe1m7=w600",
+          "fallback": "https://drive.google.com/thumbnail?id=1ic-6fwLyAo0DbBp2tk4O40K3s3XOe1m7&sz=w1600"
+        },
+        {
+          "id": "1fJHe-w35PCLERV60zJjiNsYw7fl-xmSY",
+          "name": "02-camry.jpg",
+          "url": "https://lh3.googleusercontent.com/d/1fJHe-w35PCLERV60zJjiNsYw7fl-xmSY=w1600",
+          "thumb": "https://lh3.googleusercontent.com/d/1fJHe-w35PCLERV60zJjiNsYw7fl-xmSY=w600",
+          "fallback": "https://drive.google.com/thumbnail?id=1fJHe-w35PCLERV60zJjiNsYw7fl-xmSY&sz=w1600"
+        },
+        {
+          "id": "13LI18Jvht1hxceh8ZCHzKL0OJ3hgL27n",
+          "name": "03-camry.jpg",
+          "url": "https://lh3.googleusercontent.com/d/13LI18Jvht1hxceh8ZCHzKL0OJ3hgL27n=w1600",
+          "thumb": "https://lh3.googleusercontent.com/d/13LI18Jvht1hxceh8ZCHzKL0OJ3hgL27n=w600",
+          "fallback": "https://drive.google.com/thumbnail?id=13LI18Jvht1hxceh8ZCHzKL0OJ3hgL27n&sz=w1600"
+        }
+      ]
+    },
+    {
+      "id": "MC-002",
+      "title": "2019 Ford F-150 XLT 4x4 (Sample)",
+      "make": "Ford",
+      "model": "F-150 XLT",
+      "year": 2019,
+      "type": "Truck",
+      "color": "Oxford White",
+      "mileage": 61200,
+      "price": 31500,
+      "description": "SAMPLE LISTING - not a real vehicle. SuperCrew 4x4 with 2.7L EcoBoost V6, towing package, bed liner, 20-inch wheels, SYNC 3 touchscreen and remote start.",
+      "photoFolder": "https://drive.google.com/drive/folders/1s87FkGRGLsCUfK6Vo3OcWQEwVBGL5jfy",
+      "status": "Available",
+      "photos": [
+        {
+          "id": "1yR_lUm2UavoQZKmDmQeXL7QZ_e7caPKU",
+          "name": "01-f150.jpg",
+          "url": "https://lh3.googleusercontent.com/d/1yR_lUm2UavoQZKmDmQeXL7QZ_e7caPKU=w1600",
+          "thumb": "https://lh3.googleusercontent.com/d/1yR_lUm2UavoQZKmDmQeXL7QZ_e7caPKU=w600",
+          "fallback": "https://drive.google.com/thumbnail?id=1yR_lUm2UavoQZKmDmQeXL7QZ_e7caPKU&sz=w1600"
+        },
+        {
+          "id": "1QIKkboIsCV30bORhbqB4XKdxkzgtlDJC",
+          "name": "02-f150.jpg",
+          "url": "https://lh3.googleusercontent.com/d/1QIKkboIsCV30bORhbqB4XKdxkzgtlDJC=w1600",
+          "thumb": "https://lh3.googleusercontent.com/d/1QIKkboIsCV30bORhbqB4XKdxkzgtlDJC=w600",
+          "fallback": "https://drive.google.com/thumbnail?id=1QIKkboIsCV30bORhbqB4XKdxkzgtlDJC&sz=w1600"
+        },
+        {
+          "id": "1pEhbweJzs8pJDoId5VxxLT8QSlV9sd9C",
+          "name": "03-f150.jpg",
+          "url": "https://lh3.googleusercontent.com/d/1pEhbweJzs8pJDoId5VxxLT8QSlV9sd9C=w1600",
+          "thumb": "https://lh3.googleusercontent.com/d/1pEhbweJzs8pJDoId5VxxLT8QSlV9sd9C=w600",
+          "fallback": "https://drive.google.com/thumbnail?id=1pEhbweJzs8pJDoId5VxxLT8QSlV9sd9C&sz=w1600"
+        }
+      ]
+    },
+    {
+      "id": "MC-003",
+      "title": "2020 Honda CR-V EX AWD (Sample)",
+      "make": "Honda",
+      "model": "CR-V EX",
+      "year": 2020,
+      "type": "SUV",
+      "color": "Radiant Red",
+      "mileage": 44780,
+      "price": 25750,
+      "description": "SAMPLE LISTING - not a real vehicle. All-wheel-drive compact SUV with 1.5L turbo, power moonroof, heated front seats, Honda Sensing safety suite and roomy cargo area.",
+      "photoFolder": "https://drive.google.com/drive/folders/1nfOXVEPBepabFVlce7En9F2V3rWXqjuQ",
+      "status": "Available",
+      "photos": [
+        {
+          "id": "1SLuUzQTSPTpSZjwWh4L_TqKuFOSUpDMM",
+          "name": "01-crv.jpg",
+          "url": "https://lh3.googleusercontent.com/d/1SLuUzQTSPTpSZjwWh4L_TqKuFOSUpDMM=w1600",
+          "thumb": "https://lh3.googleusercontent.com/d/1SLuUzQTSPTpSZjwWh4L_TqKuFOSUpDMM=w600",
+          "fallback": "https://drive.google.com/thumbnail?id=1SLuUzQTSPTpSZjwWh4L_TqKuFOSUpDMM&sz=w1600"
+        },
+        {
+          "id": "1L_RYXpCRB3-KqeWfC0DG8DkKUnL9EEA5",
+          "name": "02-crv.jpg",
+          "url": "https://lh3.googleusercontent.com/d/1L_RYXpCRB3-KqeWfC0DG8DkKUnL9EEA5=w1600",
+          "thumb": "https://lh3.googleusercontent.com/d/1L_RYXpCRB3-KqeWfC0DG8DkKUnL9EEA5=w600",
+          "fallback": "https://drive.google.com/thumbnail?id=1L_RYXpCRB3-KqeWfC0DG8DkKUnL9EEA5&sz=w1600"
+        },
+        {
+          "id": "1_2IWWhLLcVdHxMilEJ0_BvYTHvmqo7Ex",
+          "name": "03-crv.jpg",
+          "url": "https://lh3.googleusercontent.com/d/1_2IWWhLLcVdHxMilEJ0_BvYTHvmqo7Ex=w1600",
+          "thumb": "https://lh3.googleusercontent.com/d/1_2IWWhLLcVdHxMilEJ0_BvYTHvmqo7Ex=w600",
+          "fallback": "https://drive.google.com/thumbnail?id=1_2IWWhLLcVdHxMilEJ0_BvYTHvmqo7Ex&sz=w1600"
+        }
+      ]
+    }
+  ]
+}
