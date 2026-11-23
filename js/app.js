@@ -460,8 +460,11 @@
   }
 
   function renderUpdated() {
-    els.updated.textContent = formatWhen(state.updated);
-    els.updated.setAttribute("datetime", state.updated || "");
+    var date = parseInstant(state.updated);
+    var valid = !isNaN(date.getTime());
+    els.updated.textContent = valid ? formatWhen(date) : (state.updated ? String(state.updated) : "—");
+    if (valid) els.updated.setAttribute("datetime", date.toISOString());
+    else els.updated.removeAttribute("datetime");
   }
 
   function renderStats() {
@@ -1128,11 +1131,29 @@
     return Math.round(value).toLocaleString("en-US") + " mi";
   }
   function yearText(value) { return value == null || isNaN(value) ? "—" : String(Math.round(value)); }
+  function parseInstant(value) {
+    if (value instanceof Date) return value;
+    if (typeof value === "number" && isFinite(value)) return new Date(value);
+    var text = String(value == null ? "" : value).trim();
+    if (!text) return new Date(NaN);
+    if (/[zZ]$|[+-]\d{2}:?\d{2}$/.test(text)) return new Date(text);
+    if (/^\d{4}-\d{2}-\d{2}$/.test(text)) return new Date(text + "T00:00:00Z");
+    var normalized = text.replace(" ", "T");
+    if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d+)?)?$/.test(normalized)) return new Date(normalized + "Z");
+    return new Date(text);
+  }
   function formatWhen(value) {
-    if (!value) return "—";
-    var date = new Date(value);
-    if (isNaN(date.getTime())) return String(value);
-    return date.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
+    var date = value instanceof Date ? value : parseInstant(value);
+    if (isNaN(date.getTime())) return value ? String(value) : "—";
+    var when = date.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
+    var zone = "";
+    try {
+      var parts = new Intl.DateTimeFormat(undefined, { timeZoneName: "short" }).formatToParts(date);
+      for (var i = 0; i < parts.length; i++) {
+        if (parts[i].type === "timeZoneName") zone = parts[i].value;
+      }
+    } catch (error) {}
+    return zone ? when + " " + zone : when;
   }
   function typeSummary(cars) {
     var types = uniques(cars, "type");
