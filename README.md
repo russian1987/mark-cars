@@ -6,7 +6,7 @@ A used-car lot website for **Mark Cars**. It is a static site on GitHub Pages:
 
 Inventory lives in the [Mark Cars Inventory](https://docs.google.com/spreadsheets/d/152Dyx-0wre38mwpjj9qsAfZyg0vrkrEunY57e5Zw6cY/edit) Google Sheet (tab `Inventory`). Each car has its own folder of photos in Google Drive. A Google Apps Script web app turns that sheet into JSON, and this site renders it.
 
-Until that web app URL is pasted into `js/config.js`, the site shows the three bundled **sample** listings and the local photos in `sample-photos/`. Those listings are examples, not cars for sale. Their photos are from Wikimedia Commons; see [Photo credits](credits.html).
+`js/config.js` holds the Apps Script web app URL. If that feed fails, the site shows the three bundled **sample** listings and the local photos in `sample-photos/`. Those listings are examples, not cars for sale. Their photos are from Wikimedia Commons; see [Photo credits](credits.html).
 
 ## How the site loads cars
 
@@ -21,9 +21,9 @@ var FEED_URL = "";
 
 Each photo tries `url`, then `thumb`, then `fallback`, then a neutral placeholder.
 
-**Refresh inventory** (header) reloads the feed, shows a spinner and “Refreshing…”, then updates **Last updated** from the feed timestamp.
+Every visit loads the feed on its own. The script keeps a 60-second cache, and the page waits up to 45 seconds so a cold start can finish. A loading line stays on screen until the cars appear. If `fetch` is blocked by the script redirect, the page retries with JSONP for the same amount of time.
 
-**Add a car** opens the inventory spreadsheet in a new tab. Who can edit is controlled by the sheet’s sharing settings.
+**Refresh inventory** and **Add a car** are hidden from public visitors. Open the site with `?owner=markcars` on a browser you use to manage the lot. That browser remembers the choice, so later visits on the same device show both controls. **Refresh inventory** reloads the feed with `?refresh=1` (skipping the script cache), shows a spinner, and updates **Last updated**. **Add a car** opens the inventory spreadsheet in a new tab. Visit `?owner=off` to hide the controls again and forget the choice. Who can edit the sheet is controlled by its sharing settings. The public page does not mention these controls.
 
 Sold cars are hidden until **Show sold cars** is turned on. When they are shown, they keep a Sold badge. Pending cars stay visible with a Pending badge.
 
@@ -33,7 +33,7 @@ Open a car for the description, specs, and gallery. Click the large photo to enl
 
 ## One-time Apps Script setup
 
-The script is in the repo at [`apps-script/Code.gs`](apps-script/Code.gs). It is not deployed until you do these steps:
+The script in [`apps-script/Code.gs`](apps-script/Code.gs) is what the web app runs. To publish a new version:
 
 1. Open [Mark Cars Inventory](https://docs.google.com/spreadsheets/d/152Dyx-0wre38mwpjj9qsAfZyg0vrkrEunY57e5Zw6cY/edit).
 2. Choose **Extensions > Apps Script**.

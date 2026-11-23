@@ -3,6 +3,7 @@
 
   var SHEET_URL = "https://docs.google.com/spreadsheets/d/152Dyx-0wre38mwpjj9qsAfZyg0vrkrEunY57e5Zw6cY/edit";
   var SAMPLE_URL = "sample-feed.json";
+  var FEED_TIMEOUT_MS = 45000;
   var PLACEHOLDER = "data:image/svg+xml," + encodeURIComponent(
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">' +
       '<rect width="800" height="500" fill="#e6e0d4"/>' +
@@ -27,6 +28,8 @@
     notice: document.getElementById("notice"),
     noticeText: document.getElementById("notice-text"),
     count: document.getElementById("count"),
+    loading: document.getElementById("loading"),
+    loadingText: document.getElementById("loading-text"),
     empty: document.getElementById("empty"),
     status: document.getElementById("status"),
     inventory: document.getElementById("inventory"),
@@ -80,6 +83,7 @@
   };
 
   els.addCar.href = SHEET_URL;
+  applyOwnerControls();
 
   els.refresh.addEventListener("click", function () { loadInventory(true); });
   els.form.addEventListener("submit", function (event) { event.preventDefault(); });
@@ -150,10 +154,34 @@
     return (typeof FEED_URL === "string" ? FEED_URL : "").trim();
   }
 
+  function applyOwnerControls() {
+    var enabled = ownerControlsEnabled();
+    els.refresh.hidden = !enabled;
+    els.addCar.hidden = !enabled;
+  }
+
+  function ownerControlsEnabled() {
+    var params = new URLSearchParams(window.location.search);
+    var flag = params.get("owner");
+    if (flag === "off") {
+      try { localStorage.removeItem("markcars-owner"); } catch (error) {}
+      return false;
+    }
+    if (flag === "markcars") {
+      try { localStorage.setItem("markcars-owner", "1"); } catch (error) {}
+      return true;
+    }
+    try {
+      return localStorage.getItem("markcars-owner") === "1";
+    } catch (error) {
+      return false;
+    }
+  }
+
   function loadInventory(refresh) {
     if (state.loading) return;
     state.loading = true;
-    setBusy(true);
+    setBusy(true, refresh);
     var started = Date.now();
     announce(refresh ? "Refreshing inventory." : "Loading inventory.");
     els.inventory.setAttribute("aria-busy", "true");
@@ -191,7 +219,7 @@
       state.cars = [];
       state.sample = true;
       renderAll();
-      setNotice("Inventory could not be loaded. Check the connection and use Refresh inventory.", "error");
+      setNotice("Inventory could not be loaded. Check the connection and try again in a moment.", "error");
       announce("Inventory could not be loaded.");
     }).then(function () {
       var wait = 350 - (Date.now() - started);
@@ -220,9 +248,9 @@
     var controller = typeof AbortController === "function" ? new AbortController() : null;
     var timer = setTimeout(function () {
       if (controller) controller.abort();
-    }, 12000);
+    }, FEED_TIMEOUT_MS);
     return fetch(url, {
-      cache: refresh ? "no-store" : "default",
+      cache: "no-store",
       redirect: "follow",
       signal: controller ? controller.signal : undefined
     }).then(function (response) {
@@ -253,7 +281,7 @@
       var timer = setTimeout(function () {
         cleanup();
         reject(new Error("timeout"));
-      }, 12000);
+      }, FEED_TIMEOUT_MS);
       function cleanup() {
         clearTimeout(timer);
         try { delete window[cb]; } catch (error) { window[cb] = undefined; }
@@ -751,10 +779,16 @@
     img.src = sources[0];
   }
 
-  function setBusy(busy) {
+  function setBusy(busy, refresh) {
     els.refresh.classList.toggle("is-busy", busy);
     els.refresh.setAttribute("aria-busy", busy ? "true" : "false");
-    els.refreshLabel.textContent = busy ? "Refreshing…" : "Refresh inventory";
+    els.refreshLabel.textContent = busy ? (refresh ? "Refreshing…" : "Loading…") : "Refresh inventory";
+    if (els.loading) {
+      els.loading.hidden = !busy;
+      if (busy && els.loadingText) {
+        els.loadingText.textContent = refresh ? "Refreshing inventory…" : "Loading inventory…";
+      }
+    }
   }
 
   function setNotice(text, kind) {
