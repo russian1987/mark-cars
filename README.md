@@ -8,6 +8,12 @@ Inventory lives in the [Mark Cars Inventory](https://docs.google.com/spreadsheet
 
 `js/config.js` holds the Apps Script web app URL. If that feed fails, the site shows the three bundled **sample** listings and the local photos in `sample-photos/`. Those listings are examples, not cars for sale. Their photos are from Wikimedia Commons; see [Photo credits](credits.html).
 
+## Look and motion
+
+The page is a static site. Motion libraries load from jsDelivr after the first paint: GSAP and ScrollTrigger, Lenis on desktop, Swiper for photo carousels, PhotoSwipe for the full-screen gallery, and Lucide for spec icons. Type is Manrope and Fraunces from Google Fonts. If the visitor prefers reduced motion, the scroll effects stay off.
+
+`CONTACT` and `FINANCE` in `js/config.js` are placeholders. Edit the phone, address, and estimate defaults there. Call, Text, and Get directions use those values.
+
 ## How the site loads cars
 
 `js/config.js` has one setting:

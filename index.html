@@ -1,39 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mark Cars — Used cars</title>
-  <meta name="description" content="Mark Cars lists used vehicles with photos, mileage, and price. Browse the lot and contact Mark Cars about a stock ID.">
-  <meta name="theme-color" content="#14181d">
+  <title>Mark Cars — Used cars, carefully chosen</title>
+  <meta name="description" content="Mark Cars is a used-car lot with photos, mileage, and prices. Browse what’s on the lot and contact Mark Cars about a stock ID.">
+  <meta name="theme-color" content="#090a0c">
   <link rel="canonical" href="https://russian1987.github.io/mark-cars/">
-  <meta property="og:title" content="Mark Cars">
-  <meta property="og:description" content="Used cars listed by Mark Cars, with photos, mileage, and price.">
+  <meta property="og:title" content="Mark Cars — Used cars, carefully chosen">
+  <meta property="og:description" content="Photos, mileage, and prices for the cars on the Mark Cars lot.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://russian1987.github.io/mark-cars/">
-  <meta property="og:image" content="https://russian1987.github.io/mark-cars/sample-photos/MC-002-01.jpg">
+  <meta property="og:image" content="https://russian1987.github.io/mark-cars/sample-photos/MC-001-01.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mark Cars">
+  <meta name="twitter:description" content="Photos, mileage, and prices for the cars on the Mark Cars lot.">
+  <meta name="twitter:image" content="https://russian1987.github.io/mark-cars/sample-photos/MC-001-01.jpg">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="image" href="sample-photos/MC-002-01.jpg">
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,520;9..144,640&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="sample-photos/MC-001-01.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem("markcars-theme");
+        var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+        document.documentElement.setAttribute("data-theme", theme === "light" ? "light" : "dark");
+      } catch (error) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    })();
+  </script>
+  <script type="application/ld+json" id="jsonld">
+  {
+    "@context": "https://schema.org",
+    "@type": "AutoDealer",
+    "name": "Mark Cars",
+    "url": "https://russian1987.github.io/mark-cars/",
+    "image": "https://russian1987.github.io/mark-cars/sample-photos/MC-001-01.jpg",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "123 Example Street",
+      "addressLocality": "Your City"
+    }
+  }
+  </script>
 </head>
 <body>
   <a class="skip" href="#inventory">Skip to inventory</a>
 
-  <header class="site-header">
-    <div class="header-inner wrap">
+  <header class="site-header" id="header">
+    <div class="wrap header-inner">
       <a class="logo" href="./">
         <span class="logo-mark" aria-hidden="true">M</span>
         <span class="logo-word">Mark Cars</span>
       </a>
       <nav class="nav" aria-label="Primary">
         <a href="#inventory">Inventory</a>
+        <a href="#why">Why Mark</a>
+        <a href="#stories">Stories</a>
         <a href="#contact">Contact</a>
       </nav>
       <div class="header-actions">
-        <p class="updated">Last updated <time id="updated-time">—</time></p>
+        <p class="updated">Updated <time id="updated-time">—</time></p>
+        <button type="button" class="btn btn-ghost" id="theme-toggle" aria-pressed="false">Light</button>
         <button type="button" class="btn btn-ghost" id="refresh" hidden>
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 12a9 9 0 1 1-2.2-5.9"></path>
@@ -41,86 +73,80 @@
           </svg>
           <span id="refresh-label">Refresh inventory</span>
         </button>
-        <a class="btn btn-brass" id="add-car" href="https://docs.google.com/spreadsheets/d/152Dyx-0wre38mwpjj9qsAfZyg0vrkrEunY57e5Zw6cY/edit" target="_blank" rel="noopener noreferrer" hidden>
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <path d="M12 5v14M5 12h14"></path>
-          </svg>
-          Add a car
-        </a>
+        <a class="btn btn-brass" id="add-car" href="https://docs.google.com/spreadsheets/d/152Dyx-0wre38mwpjj9qsAfZyg0vrkrEunY57e5Zw6cY/edit" target="_blank" rel="noopener noreferrer" hidden>Add a car</a>
       </div>
     </div>
   </header>
 
   <div id="notice" class="notice" hidden>
-    <div class="notice-inner wrap" id="notice-text"></div>
+    <p class="wrap" id="notice-text"></p>
   </div>
   <noscript>
-    <div class="notice is-error">
-      <div class="notice-inner wrap">Mark Cars needs JavaScript to load the inventory.</div>
-    </div>
+    <div class="notice is-error"><p class="wrap">Mark Cars needs JavaScript to load the inventory.</p></div>
   </noscript>
 
   <main>
-    <section class="hero-band">
-      <div class="wrap hero">
-        <div class="hero-copy">
-          <p class="eyebrow">Used cars</p>
-          <h1>See what’s on the lot.</h1>
-          <p class="lede">Photos, mileage, and price for every car Mark has listed. Open one for the full gallery, then contact Mark Cars with the stock ID.</p>
-          <div class="hero-actions">
-            <a class="btn btn-brass" href="#inventory">Browse inventory</a>
-            <a class="btn btn-line" href="#contact">Contact Mark Cars</a>
-          </div>
-          <dl class="stats">
-            <div>
-              <dt>On the lot</dt>
-              <dd id="stat-count">—</dd>
-            </div>
-            <div>
-              <dt>Starting at</dt>
-              <dd id="stat-price">—</dd>
-            </div>
-            <div>
-              <dt>Body styles</dt>
-              <dd id="stat-types">—</dd>
-            </div>
-          </dl>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-media">
+        <div class="hero-ken">
+          <img id="hero-img" src="sample-photos/MC-001-01.jpg" width="1280" height="908" alt="" fetchpriority="high">
         </div>
-        <figure class="hero-photo">
-          <img id="hero-img" src="sample-photos/MC-002-01.jpg" width="1280" height="960" alt="Silver Ford F-150 crew cab parked on a sunny lot" fetchpriority="high">
-          <figcaption id="hero-caption">Sample photo · 2019 Ford F-150 XLT</figcaption>
-        </figure>
+      </div>
+      <div class="wrap hero-copy">
+        <p class="eyebrow" id="hero-caption">On the lot</p>
+        <h1 id="hero-title">Cars chosen with a careful eye.</h1>
+        <p class="lede">Photos, mileage, and a price for every car Mark has listed. Find one, then ask about the stock ID.</p>
+        <label class="search-field hero-search">
+          <span>Search the lot</span>
+          <input id="q" form="filters" type="search" placeholder="Camry, truck, red, MC-004" autocomplete="off">
+        </label>
+        <dl class="stats">
+          <div>
+            <dt>On the lot</dt>
+            <dd id="stat-count">—</dd>
+          </div>
+          <div>
+            <dt>Starting at</dt>
+            <dd id="stat-price">—</dd>
+          </div>
+          <div>
+            <dt>Body styles</dt>
+            <dd id="stat-types">—</dd>
+          </div>
+        </dl>
       </div>
     </section>
 
-    <section id="inventory" class="inventory" aria-busy="false">
-      <div class="wrap">
-        <div class="section-head">
+    <div class="wrap dock-wrap" id="inventory">
+      <form id="filters" class="dock" role="search">
+        <div class="chip-row">
           <div>
-            <p class="eyebrow">Inventory</p>
-            <h2>On the lot</h2>
+            <p class="chip-label" id="make-label">Make</p>
+            <div id="make-chips" class="chips" role="group" aria-labelledby="make-label"></div>
           </div>
-          <p id="count" class="count">Loading inventory…</p>
+          <div>
+            <p class="chip-label" id="type-label">Type</p>
+            <div id="type-chips" class="chips" role="group" aria-labelledby="type-label"></div>
+          </div>
         </div>
-
-        <form id="filters" class="toolbar" role="search">
-          <label class="field field-search">
-            <span>Search</span>
-            <input id="q" type="search" placeholder="Make, model, color, stock ID" autocomplete="off">
-          </label>
-          <label class="field field-make">
-            <span>Make</span>
-            <select id="make">
-              <option value="">All makes</option>
-            </select>
-          </label>
-          <label class="field field-type">
-            <span>Type</span>
-            <select id="type">
-              <option value="">All types</option>
-            </select>
-          </label>
-          <label class="field field-sort">
+        <div class="slider-grid">
+          <div class="slider-field">
+            <div class="slider-top">
+              <label for="price-min">Minimum price</label>
+              <span id="price-readout">Any</span>
+            </div>
+            <input id="price-min" type="range" min="0" max="100000" step="500" value="0">
+            <label class="sublabel" for="price-max">Maximum price</label>
+            <input id="price-max" type="range" min="0" max="100000" step="500" value="100000">
+          </div>
+          <div class="slider-field">
+            <div class="slider-top">
+              <label for="max-miles">Max mileage</label>
+              <span id="miles-readout">Any</span>
+            </div>
+            <input id="max-miles" type="range" min="0" max="150000" step="1000" value="150000">
+          </div>
+          <label class="sort-field">
             <span>Sort</span>
             <select id="sort">
               <option value="price-asc">Price: low to high</option>
@@ -131,43 +157,83 @@
               <option value="year-asc">Year: oldest</option>
             </select>
           </label>
-          <label class="field field-min">
-            <span>Min price</span>
-            <input id="min-price" inputmode="numeric" min="0" placeholder="Any" autocomplete="off">
-          </label>
-          <label class="field field-max">
-            <span>Max price</span>
-            <input id="max-price" inputmode="numeric" min="0" placeholder="Any" autocomplete="off">
-          </label>
-          <label class="field field-miles">
-            <span>Max mileage</span>
-            <input id="max-miles" inputmode="numeric" min="0" placeholder="Any" autocomplete="off">
-          </label>
-          <label class="field field-check">
-            <input id="show-sold" type="checkbox">
-            <span>Show sold cars</span>
-          </label>
-          <div class="field field-reset">
-            <span class="ghost-label" aria-hidden="true">Reset</span>
-            <button type="button" class="btn btn-line" id="reset-filters">Reset filters</button>
+          <div class="dock-actions">
+            <label class="sold-toggle">
+              <input id="show-sold" type="checkbox">
+              <span>Show sold cars</span>
+            </label>
+            <button type="button" class="btn btn-line" id="reset-filters">Reset</button>
           </div>
-        </form>
+        </div>
+      </form>
 
-        <p id="loading" class="loading">
-          <span class="loading-spin" aria-hidden="true"></span>
-          <span id="loading-text">Loading inventory…</span>
-        </p>
-        <div id="grid" class="grid"></div>
-        <div id="empty" class="empty" hidden></div>
+      <div class="section-head">
+        <h2>On the lot</h2>
+        <p id="count">Loading inventory…</p>
+      </div>
+      <div id="skeletons" class="grid" aria-hidden="true">
+        <div class="skeleton"><div class="skeleton-photo"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+        <div class="skeleton"><div class="skeleton-photo"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+        <div class="skeleton"><div class="skeleton-photo"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+        <div class="skeleton"><div class="skeleton-photo"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+      </div>
+      <div id="grid" class="grid" hidden></div>
+      <div id="empty" class="empty" hidden></div>
+    </div>
+
+    <section id="why" class="band">
+      <div class="wrap">
+        <p class="eyebrow">Why buy from us</p>
+        <h2>A small lot, plainly listed.</h2>
+        <div class="why-grid">
+          <article class="why-card">
+            <h3>The sheet is the inventory</h3>
+            <p>Every car on this page is a row Mark keeps. When the sheet changes, the lot changes with it.</p>
+          </article>
+          <article class="why-card">
+            <h3>Photos before promises</h3>
+            <p>Open a car and move through the gallery. The main photo is the first file in that car’s folder.</p>
+          </article>
+          <article class="why-card">
+            <h3>A number you can read</h3>
+            <p>The price is on the card. The monthly figure is an estimate you can adjust, not a credit offer.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="stories" class="band band-alt">
+      <div class="wrap">
+        <p class="eyebrow">Sample testimonials</p>
+        <h2>Examples, not reviews.</h2>
+        <p class="lede narrow">These quotes are samples so the page has a place for buyer stories. They are not from real customers.</p>
+        <div class="quote-grid">
+          <figure class="quote">
+            <span class="badge badge-sample">Sample</span>
+            <blockquote>The listing matched the car I came to see, down to the mileage on the card.</blockquote>
+            <figcaption>Sample buyer</figcaption>
+          </figure>
+          <figure class="quote">
+            <span class="badge badge-sample">Sample</span>
+            <blockquote>I looked through the photos at home, then asked about the stock ID.</blockquote>
+            <figcaption>Sample buyer</figcaption>
+          </figure>
+          <figure class="quote">
+            <span class="badge badge-sample">Sample</span>
+            <blockquote>The price on the site was the price we talked about. No surprise number.</blockquote>
+            <figcaption>Sample buyer</figcaption>
+          </figure>
+        </div>
       </div>
     </section>
 
     <section id="contact" class="contact" tabindex="-1">
       <div class="wrap contact-inner">
-        <p class="eyebrow eyebrow-light">Questions</p>
+        <p class="eyebrow">Visit or message</p>
         <h2>Contact Mark Cars</h2>
-        <p>Ask about a stock ID from the lot. Phone and email are not listed on this page.</p>
-        <p class="contact-placeholder">Contact Mark Cars</p>
+        <p id="contact-address" class="contact-line"></p>
+        <p id="contact-phone" class="contact-phone"></p>
+        <div id="contact-actions" class="actions"></div>
       </div>
     </section>
   </main>
@@ -175,7 +241,7 @@
   <footer class="site-footer">
     <div class="wrap footer-inner">
       <p class="footer-brand">Mark Cars</p>
-      <p>Sample listings are examples, with photos used under their Commons licenses. <a href="credits.html">Photo credits</a></p>
+      <p>Sample listings and sample testimonials are examples. <a href="credits.html">Photo credits</a></p>
     </div>
   </footer>
 
@@ -184,47 +250,50 @@
   <div id="car-dialog" class="dialog" hidden>
     <div class="dialog-backdrop" data-close="dialog"></div>
     <div class="dialog-panel" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
-      <button type="button" class="icon-btn dialog-close" id="dialog-close" data-close="dialog" aria-label="Close details">
-        <span aria-hidden="true">×</span>
-      </button>
-      <div class="dialog-media">
-        <button type="button" class="gallery-open" id="gallery-open">
-          <img id="gallery-img" alt="">
-        </button>
-        <div id="thumbs" class="thumbs" role="group" aria-label="Photos"></div>
+      <button type="button" class="icon-btn dialog-close" id="dialog-close" data-close="dialog" aria-label="Close details"><span aria-hidden="true">×</span></button>
+      <div class="dialog-layout">
+        <div class="dialog-gallery">
+          <div class="swiper detail-swiper" id="detail-swiper">
+            <div class="swiper-wrapper" id="detail-slides"></div>
+            <button type="button" class="swiper-nav prev" id="detail-prev" aria-label="Previous photo"><span aria-hidden="true">‹</span></button>
+            <button type="button" class="swiper-nav next" id="detail-next" aria-label="Next photo"><span aria-hidden="true">›</span></button>
+          </div>
+          <button type="button" class="btn btn-line enlarge" id="enlarge">Full screen</button>
+        </div>
+        <div class="dialog-copy">
+          <p id="dialog-kicker" class="eyebrow"></p>
+          <h2 id="dialog-title"></h2>
+          <p id="dialog-price" class="dialog-price"></p>
+          <p id="dialog-status"></p>
+          <p id="dialog-sample" class="sample-note" hidden></p>
+          <dl id="dialog-specs" class="specs"></dl>
+          <h3 class="desc-heading">Description</h3>
+          <p id="dialog-desc" class="dialog-desc"></p>
+          <form id="estimator" class="estimator">
+            <h3>Monthly estimate</h3>
+            <div class="estimate-grid">
+              <label>Down payment
+                <input id="est-down" inputmode="numeric" min="0" value="0">
+              </label>
+              <label>Term
+                <select id="est-term">
+                  <option value="36">36 months</option>
+                  <option value="48">48 months</option>
+                  <option value="60">60 months</option>
+                  <option value="72">72 months</option>
+                </select>
+              </label>
+              <label>APR %
+                <input id="est-apr" inputmode="decimal" min="0" step="0.1" value="6.9">
+              </label>
+            </div>
+            <p id="estimate-out" class="estimate-out"></p>
+            <p class="fine">Estimate only. This is not a credit offer.</p>
+          </form>
+          <div id="dialog-actions" class="actions"></div>
+          <p id="dialog-credit" class="credit-line" hidden></p>
+        </div>
       </div>
-      <div class="dialog-copy">
-        <p id="dialog-kicker" class="eyebrow"></p>
-        <h2 id="dialog-title"></h2>
-        <p id="dialog-price" class="dialog-price"></p>
-        <p id="dialog-status"></p>
-        <p id="dialog-sample" class="sample-note" hidden></p>
-        <dl id="dialog-specs" class="specs"></dl>
-        <h3 class="desc-heading">Description</h3>
-        <p id="dialog-desc" class="dialog-desc"></p>
-        <p id="dialog-credit" class="credit-line" hidden></p>
-        <a class="btn btn-brass" id="dialog-contact" href="#contact">Contact Mark Cars about this car</a>
-      </div>
-    </div>
-  </div>
-
-  <div id="lightbox" class="lightbox" hidden>
-    <div class="lightbox-backdrop" data-close="light"></div>
-    <div class="lightbox-stage" role="dialog" aria-modal="true" aria-labelledby="light-caption">
-      <button type="button" class="icon-btn light-close" id="light-close" data-close="light" aria-label="Close enlarged photo">
-        <span aria-hidden="true">×</span>
-      </button>
-      <button type="button" class="icon-btn light-nav light-prev" id="light-prev" aria-label="Previous photo">
-        <span aria-hidden="true">‹</span>
-      </button>
-      <figure>
-        <img id="light-img" alt="">
-        <figcaption id="light-caption"></figcaption>
-        <p id="light-hint" class="light-hint">Arrow keys move between photos. Escape closes.</p>
-      </figure>
-      <button type="button" class="icon-btn light-nav light-next" id="light-next" aria-label="Next photo">
-        <span aria-hidden="true">›</span>
-      </button>
     </div>
   </div>
 
