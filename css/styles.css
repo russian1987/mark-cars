@@ -504,7 +504,8 @@ input[type="range"] {
 .card-swiper.swiper-initialized .swiper-slide { display: block; }
 
 .card-swiper .swiper-slide,
-.detail-swiper .swiper-slide { position: relative; }
+.detail-swiper .swiper-slide,
+.card-hit { height: 100%; }
 
 .card-swiper img,
 .detail-swiper img {
@@ -512,9 +513,9 @@ input[type="range"] {
   inset: 0;
   width: 100%;
   height: 100%;
+  max-height: none;
   object-fit: cover;
   display: block;
-  transition: transform 0.5s ease;
 }
 
 .card:hover .card-swiper img { transform: scale(1.06); }
@@ -712,13 +713,13 @@ input[type="range"] {
 
 .detail-swiper {
   position: relative;
-  aspect-ratio: 4 / 3;
-  max-height: 72vh;
+  height: min(70vh, 640px);
+  width: 100%;
   background: #14120f;
   overflow: hidden;
 }
 
-.detail-swiper .swiper-slide { display: none; height: 100%; }
+.detail-swiper .swiper-slide { display: none; height: auto; }
 .detail-swiper .swiper-slide:first-child,
 .detail-swiper.swiper-initialized .swiper-slide { display: block; }
 

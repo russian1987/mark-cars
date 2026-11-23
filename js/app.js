@@ -738,10 +738,9 @@
       slide.className = "swiper-slide";
       var img = document.createElement("img");
       var alt = photoAlt(car, index, photos.length);
-      img.alt = alt;
-      attachFallback(img, photo, alt);
       slide.appendChild(img);
       els.detailSlides.appendChild(slide);
+      attachFallback(img, photo, alt);
     });
     var multi = photos.length > 1;
     els.detailPrev.hidden = !multi;
@@ -1008,14 +1007,21 @@
     if (img._onerr) img.removeEventListener("error", img._onerr);
     var sources = [];
     if (photo) [photo.url, photo.thumb, photo.fallback].forEach(function (src) { if (src && sources.indexOf(src) === -1) sources.push(src); });
-    var index = 0;
     function fail() {
-      index += 1;
-      if (index < sources.length) { img.classList.remove("is-placeholder"); img.src = sources[index]; return; }
-      img.removeEventListener("error", fail);
-      img._onerr = null;
-      img.classList.add("is-placeholder");
-      if (img.src !== PLACEHOLDER) img.src = PLACEHOLDER;
+      var failed = img.getAttribute("src") || "";
+      window.setTimeout(function () {
+        if ((img.getAttribute("src") || "") !== failed) return;
+        if (img.naturalWidth > 0) return;
+        var next = sources[sources.indexOf(failed) + 1];
+        if (next) {
+          img.src = next;
+          return;
+        }
+        if (!img.classList.contains("is-placeholder")) {
+          img.classList.add("is-placeholder");
+          img.src = PLACEHOLDER;
+        }
+      }, 60);
     }
     img._onerr = fail;
     img.addEventListener("error", fail);
